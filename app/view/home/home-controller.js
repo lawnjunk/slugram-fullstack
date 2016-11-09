@@ -11,7 +11,8 @@ function HomeController($log, $rootScope, $window, $location, authService){
   //console.log('query', query.token);
   //this.lulawt = 'asldkfjlaskfjasf';
 
-  $window.onload = function(){
+  function pageLoadHandler(){
+    // if there is allready a token go the home page
     authService.getToken()
     .then((token) => {
       console.log('token', token)
@@ -29,7 +30,9 @@ function HomeController($log, $rootScope, $window, $location, authService){
     })
   };
 
-  $rootScope.$on('locationChangeSuccess', $window.onload);
+
+  $window.onload = pageLoadHandler;
+  $rootScope.$on('locationChangeSuccess', pageLoadHandler);;
 
   let googleAuthBase = 'https://accounts.google.com/o/oauth2/v2/auth';
   let googleAuthResponseType = 'response_type=code';
