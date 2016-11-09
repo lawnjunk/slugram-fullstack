@@ -10,6 +10,7 @@
     "build": "./node_modules/webpack/bin/webpack.js",
     "build-watch": "./node_modules/webpack/bin/webpack.js -w",
     "frontend-test": "./node_modules/karma/bin/karma start --single-run",
+    "heroku-postbuild": "./node_modules/webpack/bin/webpack.js",
     "test-watch": "./node_modules/karma/bin/karma start",
     "start": "node server.js",
     "start-debug": "DEBUG='slug*' npm start",
