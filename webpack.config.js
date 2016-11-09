@@ -15,7 +15,7 @@ const production = process.env.NODE_ENV === 'production';
 
 console.log('env.TITLE', process.env.TITLE);
 let plugins = [
-  new ExtractTextPlugin('bundle.css'),
+  new ExtractTextPlugin('[hash].css'),
   new HTMLPlugin({ template: `${__dirname}/app/index.html` }),
   new webpack.DefinePlugin({
     __API_URL__: JSON.stringify(process.env.API_URL),
@@ -24,6 +24,11 @@ let plugins = [
     __DEBUG__: JSON.stringify(!production),
   }),
 ];
+
+let output = {
+  path: 'build',
+  filename: '[hash].js',
+};
 
 if (production){
   plugins = plugins.concat([
@@ -35,16 +40,15 @@ if (production){
     }),
     new CleanPlugin(),
   ]);
+
+  output.publicPath = 'https://d2mb8w05vzwcw5.cloudfront.net';
 }
 
 module.exports = {
   entry: `${__dirname}/app/entry.js`,
   devtool: production ? false : 'eval',
+  output,
   plugins,
-  output: {
-    path: 'build',
-    filename: 'bundle.js',
-  },
   sassLoader: {
     includePaths: [`${__dirname}/app/scss/lib`],
   },
@@ -60,11 +64,11 @@ module.exports = {
         loader: 'html',
       },
       {
-        test: /\.(woff|ttf|svg|eot).*/,
-        loader: 'url?limit=10000&name=font/[name].[ext]',
+        test: /\.(woff|ttf|eot).*/,
+        loader: 'url?limit=10000&name=font/[hash].[ext]',
       },
       {
-        test: /\.(jpg|jpeg|bmp|tiff|gif|png)$/,
+        test: /\.(jpg|jpeg|svg|bmp|tiff|gif|png)$/,
         loader: 'url?limit=10000&name=image/[hash].[ext]',
       },
       {
