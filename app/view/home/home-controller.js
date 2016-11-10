@@ -40,7 +40,9 @@ function HomeController($log, $rootScope, $window, $location, authService){
   let googleAuthScope = 'scope=profile%20email%20openid';
   let googleAuthRedirectURI = `redirect_uri=${__API_URL__}/api/auth/oauth_callback`;
   let googleAuthAccessType = 'access_type=offline';
-  let googleAuthPrompt = 'prompt=consent';
 
-  this.googleAuthURL = `${googleAuthBase}?${googleAuthResponseType}&${googleAuthClientID}&${googleAuthScope}&${googleAuthRedirectURI}&${googleAuthAccessType}&${googleAuthPrompt}`;
+  this.googleAuthURL = `${googleAuthBase}?${googleAuthResponseType}&${googleAuthClientID}&${googleAuthScope}&${googleAuthRedirectURI}&${googleAuthAccessType}`;
+  if(!__DEBUG__) this.googleAuthURL += '&prompt=consent';
 }
+
+
